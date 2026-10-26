@@ -1,0 +1,24 @@
+[package]
+name = "oct26"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+sysinfo = "0.39.6"
+libc = "0.2.186"
+log = "0.4.34"
+
+[profile.release]
+opt-level = "z"     # Optimize for size
+lto = true          # Enable Link Time Optimization
+codegen-units = 1   # Reduce parallel code generation for better optimization
+panic = "abort"     # Remove stack unwinding code
+strip = true        # Automatically strip symbols from the binary
+
+[target.x86_64-unknown-linux-gnu]
+linker = "x86_64-unknown-linux-gnu-gcc"
+
+#rustup target add x86_64-unknown-linux-gnu
+
+#cross build --target x86_64-unknown-linux-gnu --release
+#CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=/opt/homebrew/bin/x86_64-unknown-linux-gnu-gcc cargo build --target x86_64-unknown-linux-gnu --release
