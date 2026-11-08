@@ -1,0 +1,25 @@
+[Unit]
+Description=C2 Server - Command and Control Server
+After=network.target
+
+[Service]
+Type=simple
+User=c2server
+Group=c2server
+WorkingDirectory=/opt/c2
+ExecStart=/opt/c2/c2-server --bind 0.0.0.0:8080 --master-key CHANGE_ME
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=c2-server
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/c2/data
+
+[Install]
+WantedBy=multi-user.target
